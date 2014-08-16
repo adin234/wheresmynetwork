@@ -46,6 +46,7 @@ exports.post_wireless = function (req, res, next) {
 			}
 			if (err) {
 				logger.log('warn', 'Error putting the data');
+				console.log(err);
 				return next(err);
 			}
 			if(result.length === 0) {
