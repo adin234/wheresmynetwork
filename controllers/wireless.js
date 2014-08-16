@@ -36,14 +36,10 @@ exports.post_wireless = function (req, res, next) {
 			logger.log('info', req.body);
 			data = req.body;
 			data._id = data.ip;
-			mongo.collection('networks')
-				.insert(data, format_insert);
+			mmongo.collection('networks')
+					.update({_id : data._id}, {$set: data}, {upsert:true}, format_insert);
 		},
 		format_insert = function (err, result) {
-			if(err && err.indexOf('insertDocument') && err.indexOf('duplicate key')) {
-				mongo.collection('networks')
-					.update({_id : data._id}, {$set: data}, format_insert);
-			}
 			if (err) {
 				logger.log('warn', 'Error putting the data');
 				console.log(err);
