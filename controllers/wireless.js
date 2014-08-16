@@ -40,7 +40,7 @@ exports.post_wireless = function (req, res, next) {
 				.insert(data, format_insert);
 		},
 		format_insert = function (err, result) {
-			if(err.indexOf('insertDocument') && err.indexOf('duplicate key')) {
+			if(err && err.indexOf('insertDocument') && err.indexOf('duplicate key')) {
 				mongo.collection('networks')
 					.update({_id : data._id}, {$set: data}, format_insert);
 			}
