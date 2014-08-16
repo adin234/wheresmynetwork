@@ -45,10 +45,8 @@ exports.post_wireless = function (req, res, next) {
 				console.log(err);
 				return next(err);
 			}
-			if(result.length === 0) {
-				return res.status(500).send({message: 'no data'});
-			}
-			send_response(null, result[0]);
+
+			send_response(null, data);
 		},
 		send_response = function (err, result) {
 			if (err) {
