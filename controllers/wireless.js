@@ -97,3 +97,49 @@ exports.post_wireless = function (req, res, next) {
 
 	start();
 };
+
+exports.post_respondsms = function (req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	var data = {},
+		start = function () {
+			logger.log('info', 'Putting Wireless');
+			logger.log('info', req.body);
+			data = req.body;
+			
+			if(data.message.toUpperCase() == 'GET ALL') {
+				mongo.collection('networks')
+					.find({}).toArray(send_message);
+			}
+		},
+		send_message = function(err, result) {
+			data.sms = JSON.stringify(result);
+			mongo.collection('access')
+				.findOne({_id : req.body.number}, send_actual_message);
+		},
+		send_actual_message = function(err, result) {
+			data.access_token = result.access_token;
+			data.number = result.subscriber_number
+			curl.post
+				.to('game.adin234.com', 80, '/respond.php')
+				.send({
+					message : sms,
+					number	: req.body.number
+				});
+
+			send_response(null, ['asdfsadf']);
+		}
+		send_response = function (err, result) {
+			if (err) {
+				logger.log('warn', 'Error putting the data');
+				return next(err);
+			}
+
+			if(result.length === 0) {
+				return res.status(500).send({message: 'user not found'});
+			}
+
+			res.send(result);
+		};
+
+	start();
+};

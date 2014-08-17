@@ -16,6 +16,6 @@ module.exports	= function (router, logger) {
 	router.get('/wireless', wireless.get_wireless);
 	router.post('/wireless', wireless.post_wireless);
 	router.post('/access', wireless.post_access);
-
+	router.post('/respondsms', wireless.post_respondsms);
 	return router;
 };
