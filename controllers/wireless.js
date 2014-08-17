@@ -110,6 +110,8 @@ exports.post_respondsms = function (req, res, next) {
 				mongo.collection('networks')
 					.find({}).toArray(send_message);
 			}
+
+			send_response(err, [data])
 		},
 		send_message = function(err, result) {
 			data.sms = JSON.stringify(result);
