@@ -28,6 +28,30 @@ exports.get_wireless = function (req, res, next) {
 	start();
 };
 
+exports.post_access = function(req, res, next) {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	var data = {},
+		start = function () {
+			logger.log('info', 'Putting access');
+			logger.log('info', req.body);
+			send_response(null, ['hello']);
+		}
+		send_response = function (err, result) {
+			if (err) {
+				logger.log('warn', 'Error putting the data');
+				return next(err);
+			}
+
+			if(result.length === 0) {
+				return res.status(500).send({message: 'access not found'});
+			}
+
+			res.send(result);
+		};
+
+	start();
+};
+
 exports.post_wireless = function (req, res, next) {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	var data = {},

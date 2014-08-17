@@ -3,6 +3,7 @@ var express		= require('express'),
     logger		= require(__dirname + '/lib/logger'),
     http		= require('http'),
     bodyParser 	= require('body-parser'),
+    io 			= require('socket.io'),
     app			= express();
 
 http.globalAgent.maxSockets = 30;
