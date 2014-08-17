@@ -107,11 +107,11 @@ exports.post_respondsms = function (req, res, next) {
 			data = req.body;
 			
 			if(data.message.toUpperCase() == 'GET ALL') {
-				mongo.collection('networks')
+				return mongo.collection('networks')
 					.find({}).toArray(send_message);
 			}
 
-			send_response(err, [data])
+			send_response(null, [data])
 		},
 		send_message = function(err, result) {
 			data.sms = JSON.stringify(result);
