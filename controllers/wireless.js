@@ -34,8 +34,18 @@ exports.post_access = function(req, res, next) {
 		start = function () {
 			logger.log('info', 'Putting access');
 			logger.log('info', req.body);
-			send_response(null, ['hello']);
-		}
+			mongo.collection('networks')
+					.update({_id : req.body.subscriber_number}, {$set: req.body}, {upsert:true}, respond);
+		},
+		respond = function (err, result) {
+			if (err) {
+				logger.log('warn', 'Error putting the data');
+				console.log(err);
+				return next(err);
+			}
+
+			send_response(null, ['success']);
+		},
 		send_response = function (err, result) {
 			if (err) {
 				logger.log('warn', 'Error putting the data');
