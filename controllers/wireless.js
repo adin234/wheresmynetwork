@@ -34,7 +34,7 @@ exports.post_access = function(req, res, next) {
 		start = function () {
 			logger.log('info', 'Putting access');
 			logger.log('info', req.body);
-			mongo.collection('networks')
+			mongo.collection('access')
 					.update({_id : req.body.subscriber_number}, {$set: req.body}, {upsert:true}, respond);
 		},
 		respond = function (err, result) {
