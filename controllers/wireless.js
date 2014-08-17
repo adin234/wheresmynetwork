@@ -114,7 +114,7 @@ exports.post_respondsms = function (req, res, next) {
 			send_response(null, [data])
 		},
 		send_message = function(err, result) {
-			data.sms = JSON.stringify(result);
+			data.message = JSON.stringify(result);
 			mongo.collection('access')
 				.findOne({_id : req.body.number}, send_actual_message);
 		},
@@ -123,10 +123,7 @@ exports.post_respondsms = function (req, res, next) {
 			data.number = result.subscriber_number
 			curl.post
 				.to('game.adin234.com', 80, '/respond.php')
-				.send({
-					message : data.sms,
-					number	: req.body.number
-				});
+				.send(data);
 
 			send_response(null, ['asdfsadf']);
 		}
