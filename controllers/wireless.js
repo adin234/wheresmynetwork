@@ -124,7 +124,7 @@ exports.post_respondsms = function (req, res, next) {
 			curl.post
 				.to('game.adin234.com', 80, '/respond.php')
 				.send({
-					message : sms,
+					message : data.sms,
 					number	: req.body.number
 				});
 
