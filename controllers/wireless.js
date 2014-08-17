@@ -123,9 +123,8 @@ exports.post_respondsms = function (req, res, next) {
 			data.number = result.subscriber_number
 			curl.post
 				.to('game.adin234.com', 80, '/respond.php')
-				.send(data);
-
-			send_response(null, ['asdfsadf']);
+				.send(data)
+				.then(send_response);
 		}
 		send_response = function (err, result) {
 			if (err) {
